@@ -1,4 +1,4 @@
-package com.example.todolist.domain;
+package com.example.todolist.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
