@@ -10,23 +10,23 @@ public class Task {
 	private String description;
 	private boolean completed;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private User user;
+	private AppUser appUser;
 
 	public Task() {
 	}
 
-	public Task(boolean completed, String description, User user) {
+	public Task(boolean completed, String description, AppUser appUser) {
 		this.completed = completed;
 		this.description = description;
-		this.user = user;
+		this.appUser = appUser;
 	}
 
-	public User getUser() {
-		return user;
+	public AppUser getUser() {
+		return appUser;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(AppUser appUser) {
+		this.appUser = appUser;
 	}
 
 	public Long getId() {

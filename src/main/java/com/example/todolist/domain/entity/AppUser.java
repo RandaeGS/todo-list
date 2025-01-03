@@ -1,25 +1,25 @@
 package com.example.todolist.domain.entity;
 
 import jakarta.persistence.*;
-import org.springframework.ui.context.ThemeSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class User {
+public class AppUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(unique = true)
 	private String username;
 	private String password;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Task> tasks;
 
-	public User() {
+	public AppUser() {
 	}
 
-	public User(String username, String password) {
+	public AppUser(String username, String password) {
 		this.username = username;
 		this.password = password;
 		this.tasks = new ArrayList<>();
