@@ -1,9 +1,6 @@
 package com.example.todolist.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Task {
@@ -12,13 +9,24 @@ public class Task {
 	private Long id;
 	private String description;
 	private boolean completed;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User user;
 
 	public Task() {
 	}
 
-	public Task(boolean completed, String description) {
+	public Task(boolean completed, String description, User user) {
 		this.completed = completed;
 		this.description = description;
+		this.user = user;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Long getId() {
