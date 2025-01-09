@@ -17,10 +17,12 @@
             <button class="bg-blue-400 hover:bg-blue-500 rounded transition-colors p-2 text-white mx-2">Create</button>
           </div>
         </form>
+      </div>
 
+      <div class="w-full mt-6 max-w-xl bg-slate-600 p-4">
+        <h1 class="text-white text-center text-2xl font-semibold">Task List</h1>
       </div>
 
     </main>
-
   </div>
 </template>
