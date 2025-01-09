@@ -1,13 +1,12 @@
 <script setup>
-import AuthView from './views/AuthPage.vue'
-import MainPage from './views/MainPage.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
+
   <div class="min-h-screen bg-gradient-to-r from-gray-100 to-gray-300">
-    <MainPage />
+    <router-view></router-view>
 
   </div>
-
 
 </template>

@@ -1,5 +1,11 @@
 <script setup>
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
+
+function login() {
+  router.push("/main");
+}
 </script>
 
 <template>
@@ -8,7 +14,7 @@
     <div class="shadow-lg bg-white p-4 rounded w-full max-w-md">
       <h1 class="font-bold text-2xl text-center">Welcome</h1>
       <p class="text-center my-2 font-semibold text-gray-900">Todo List Frontend - Vue</p>
-      <form class="">
+      <form @submit.prevent="login">
         <div class="my-4">
           <label for="username" class="block font-semibold text-sm mb-2 text-gray-900">Username</label>
           <input type="text" name="username" id="username" class="w-full rounded border shadow p-2"
