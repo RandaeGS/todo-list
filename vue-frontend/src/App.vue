@@ -4,7 +4,7 @@ import MainPage from './views/MainPage.vue'
 </script>
 
 <template>
-  <div>
+  <div class="min-h-screen bg-gradient-to-r from-gray-100 to-gray-300">
     <MainPage />
 
   </div>
