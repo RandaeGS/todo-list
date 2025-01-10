@@ -1,10 +1,15 @@
 <script setup>
 import { useRouter } from 'vue-router'
+import { useAuthStore } from "../stores/auth.store.js";
 
 const router = useRouter()
 
 function login() {
   router.push("/main");
+}
+
+function onLoginSubmit() {
+
 }
 </script>
 
