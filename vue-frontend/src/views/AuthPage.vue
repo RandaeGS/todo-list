@@ -1,8 +1,26 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuthStore } from "../stores/auth.store.js";
+import { ref } from "vue";
 
 const router = useRouter()
+const isLoginModeActive = ref(true)
+
+const formInfo = {
+  mode: () => {
+    return isLoginModeActive.value ? "Register" : "Login"
+  },
+  submitButton: () => {
+    return !isLoginModeActive.value ? "Register" : "Login"
+  },
+  footer: () => {
+    return isLoginModeActive.value ? "Don't have a user?" : "Alredy registered?"
+  }
+}
+
+function switchFormMode() {
+  isLoginModeActive.value = !isLoginModeActive.value
+}
 
 function login() {
   router.push("/main");
@@ -33,11 +51,12 @@ function onLoginSubmit() {
         </div>
 
         <button type="submit"
-          class="w-full bg-blue-400 hover:bg-blue-500 transition-colors rounded px-2 py-2 text-white">Login</button>
+          class="w-full bg-blue-400 hover:bg-blue-500 transition-colors rounded px-2 py-2 text-white"> {{
+            formInfo.submitButton() }} </button>
 
         <div class="flex justify-center mt-3">
-          <p>Don't have a user?</p>
-          <p class="text-blue-400 mx-2">Sign up now</p>
+          <p>{{ formInfo.footer() }}</p>
+          <p class="text-blue-400 mx-2" @click="switchFormMode"> {{ formInfo.mode() }}</p>
 
         </div>
       </form>
