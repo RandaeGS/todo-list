@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -17,6 +19,8 @@ public class User {
 	private String username;
 	@Column(nullable = false)
 	private String password;
+	@OneToMany
+	private List<Task> taskList;
 
 	public User(String username, String password) {
 		this.username = username;
