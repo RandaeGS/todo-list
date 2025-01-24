@@ -25,10 +25,11 @@ public class WebSecurityConfig {
 	@Autowired
 	public MyUserDetailsService userDetailsService;
 
+	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(AbstractHttpConfigurer::disable).
+		http.csrf(customizer -> customizer.disable()).
 						authorizeHttpRequests(request -> request.
-										requestMatchers("/auth/**").permitAll()
+										requestMatchers("auth/register","/auth/register", "/auth/login").permitAll()
 										.anyRequest().authenticated())
 						.httpBasic(Customizer.withDefaults()).
 						sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
