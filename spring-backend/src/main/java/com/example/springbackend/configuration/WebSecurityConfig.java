@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Slf4j
 @Configuration
@@ -24,6 +25,8 @@ public class WebSecurityConfig {
 
 	@Autowired
 	public MyUserDetailsService userDetailsService;
+	@Autowired
+	public JwtFilter jwtFilter;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,7 +35,8 @@ public class WebSecurityConfig {
 										requestMatchers("auth/register","/auth/register", "/auth/login").permitAll()
 										.anyRequest().authenticated())
 						.httpBasic(Customizer.withDefaults()).
-						sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+						sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+						.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
