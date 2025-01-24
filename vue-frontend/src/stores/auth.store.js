@@ -4,10 +4,14 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     userJwt: null,
   }),
+  getters: {
+    token: (state) => {
+      return state.userJwt
+    },
+  },
   actions: {
-    async login(username, password) {},
-    async register(username, password) {
-      const res = await fetch('https://localhost:3000/register', {
+    async login(username, password) {
+      const res = await fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -15,7 +19,16 @@ export const useAuthStore = defineStore('auth', {
         body: JSON.stringify({ username, password }),
       })
       const jwt = await res.json()
-      this.jwt = jwt
+      this.userJwt = jwt
+    },
+    async register(username, password) {
+      const res = await fetch('https://localhost:8080/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      })
     },
   },
 })
