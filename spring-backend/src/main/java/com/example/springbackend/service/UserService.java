@@ -19,6 +19,8 @@ public class UserService {
 	private UsersRepository usersRepository;
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	@Autowired
+	private JWTService jwtService;
 
 	public ResponseEntity<String> register(User user){
 		if (usersRepository.existsByUsername(user.getUsername())) {
@@ -37,7 +39,7 @@ public class UserService {
 						));
 
 		if (authentication.isAuthenticated()) {
-			return new ResponseEntity<>("Login succesfull", HttpStatus.OK);
+			return new ResponseEntity<>(jwtService.generateToken(user.getUsername()), HttpStatus.OK);
 		}
 
 		return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
