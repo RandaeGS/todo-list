@@ -6,6 +6,9 @@ import { ref } from "vue";
 const router = useRouter()
 const isLoginModeActive = ref(true)
 
+const username = ref()
+const password = ref()
+
 const formInfo = {
   mode: () => {
     return isLoginModeActive.value ? "Register" : "Login"
@@ -22,13 +25,15 @@ function switchFormMode() {
   isLoginModeActive.value = !isLoginModeActive.value
 }
 
-function login() {
-  router.push("/main");
+function onSubmit() {
+  const store = useAuthStore()
+  if (isLoginModeActive.value) {
+
+  } else {
+    store.register(username.value, password.value)
+  }
 }
 
-function onLoginSubmit() {
-
-}
 </script>
 
 <template>
@@ -37,17 +42,17 @@ function onLoginSubmit() {
     <div class="shadow-lg bg-white p-4 rounded w-full max-w-md">
       <h1 class="font-bold text-2xl text-center">Welcome</h1>
       <p class="text-center my-2 font-semibold text-gray-900">Todo List Frontend - Vue</p>
-      <form @submit.prevent="login">
+      <form @submit.prevent="onSubmit">
         <div class="my-4">
           <label for="username" class="block font-semibold text-sm mb-2 text-gray-900">Username</label>
-          <input type="text" name="username" id="username" class="w-full rounded border shadow p-2"
+          <input type="text" name="username" id="username" v-model="username" class="w-full rounded border shadow p-2"
             placeholder="Username">
         </div>
 
         <div class="my-4 w-full">
           <label for="password" class="block font-semibold text-sm mb-2 text-gray-900">Password</label>
-          <input type="password" name="password" id="password" class="w-full rounded border shadow p-2"
-            placeholder="Enter your password">
+          <input type="password" name="password" id="password" v-model="password"
+            class="w-full rounded border shadow p-2" placeholder="Enter your password">
         </div>
 
         <button type="submit"

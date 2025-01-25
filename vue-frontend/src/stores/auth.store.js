@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
+import axiosInstance from '@/plugins/axios'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -13,7 +15,7 @@ export const useAuthStore = defineStore('auth', {
         return null
       }
       try {
-        const payload = state.userJwt.split(.)[1];
+        const payload = state.userJwt.split('.')[1]
         return JSON.parse(atob(payload))
       } catch (error) {
         console.error('Error decoding token: ', error)
@@ -29,7 +31,7 @@ export const useAuthStore = defineStore('auth', {
       const currentTime = Date.now()
 
       return currentTime >= expireTime
-    }
+    },
   },
   actions: {
     async login(username, password) {
@@ -44,13 +46,21 @@ export const useAuthStore = defineStore('auth', {
       this.userJwt = jwt
     },
     async register(username, password) {
-      const res = await fetch('https://localhost:8080/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      })
+      axiosInstance
+        .post('/auth/register', {
+          username: username,
+          password: password,
+        })
+        .then((response) => {
+          const jwt = response.data.json()
+          console.log(jwt)
+          this.userJwt = jwt
+          const router = useRouter()
+          router.push('/')
+        })
+        .catch((error) => {
+          console.error('Error during registration: ', error)
+        })
     },
   },
 })
