@@ -29,7 +29,7 @@ public class UserService {
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		usersRepository.save(user);
-		return new ResponseEntity<>("Registration Successful!", HttpStatus.OK);
+		return new ResponseEntity<>(jwtService.generateToken(user.getUsername()), HttpStatus.OK);
 	}
 
 	public ResponseEntity<String> login(User user) {
