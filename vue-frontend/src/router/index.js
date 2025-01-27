@@ -10,6 +10,7 @@ const router = createRouter({
       path: '/',
       name: 'main',
       component: MainPage,
+      requireAuth: true,
     },
     {
       path: '/auth',
@@ -22,7 +23,7 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   const store = useAuthStore()
 
-  if (store.token == null && to.name !== 'auth') {
+  if (store.isTokenExpired && to.name !== 'auth') {
     return { name: 'auth' }
   }
 })

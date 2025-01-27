@@ -46,21 +46,20 @@ export const useAuthStore = defineStore('auth', {
       this.userJwt = jwt
     },
     async register(username, password) {
-      axiosInstance
-        .post('/auth/register', {
+      try {
+        const response = await axiosInstance.post('/auth/register', {
           username: username,
           password: password,
         })
-        .then((response) => {
-          const jwt = response.data.json()
-          console.log(jwt)
-          this.userJwt = jwt
-          const router = useRouter()
-          router.push('/')
-        })
-        .catch((error) => {
-          console.error('Error during registration: ', error)
-        })
+        const jwt = response.data
+        console.log(response)
+        console.log(jwt)
+        this.userJwt = jwt
+        return true
+      } catch (error) {
+        console.error('Error during registration: ', error)
+        return false
+      }
     },
   },
 })

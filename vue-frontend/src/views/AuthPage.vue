@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuthStore } from "../stores/auth.store.js";
-import { ref } from "vue";
+import { ref } from 'vue'
 
 const router = useRouter()
 const isLoginModeActive = ref(true)
@@ -25,12 +25,23 @@ function switchFormMode() {
   isLoginModeActive.value = !isLoginModeActive.value
 }
 
-function onSubmit() {
+async function onSubmit() {
   const store = useAuthStore()
+
   if (isLoginModeActive.value) {
 
   } else {
-    store.register(username.value, password.value)
+    try {
+      const success = await store.register(username.value, password.value)
+      console.log('Resultado del registro:', success)
+      if (success) {
+        await router.push('/')
+      } else {
+        console.log('usuario existe')
+      }
+    } catch (error) {
+      console.error('Error en el registro:', error)
+    }
   }
 }
 
