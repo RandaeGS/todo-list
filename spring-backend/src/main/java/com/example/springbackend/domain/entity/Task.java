@@ -14,14 +14,14 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String description;
-	private boolean isCompleted;
-	private boolean isDeleted;
+	private boolean completed;
+	private boolean deleted;
 	@ManyToOne
 	private User user;
 
 	public Task(String description) {
 		this.description = description;
-		this.isCompleted = false;
-		this.isDeleted = false;
+		this.completed = false;
+		this.deleted = false;
 	}
 }
