@@ -29,6 +29,17 @@ async function onSubmit() {
   const store = useAuthStore()
 
   if (isLoginModeActive.value) {
+    try {
+      const success = await store.login(username.value, password.value)
+      console.log('Login status: ', success)
+      if (success) {
+        await router.push('/')
+      } else {
+        console.log("Username or password incorrect")
+      }
+    } catch (error) {
+      console.error('Error en el registro:', error)
+    }
 
   } else {
     try {

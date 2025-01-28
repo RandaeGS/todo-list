@@ -35,15 +35,19 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     async login(username, password) {
-      const res = await fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      })
-      const jwt = await res.json()
-      this.userJwt = jwt
+      try {
+        const response = await axiosInstance.post('/auth/login', {
+          username: username,
+          password: password,
+        })
+        const jwt = response.data
+        console.log(jwt)
+        this.userJwt = jwt
+        return true
+      } catch (error) {
+        console.error('Error during login: ', error)
+        return false
+      }
     },
     async register(username, password) {
       try {
