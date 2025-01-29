@@ -7,4 +7,17 @@ const axiosInstance = axios.create({
   timeout: 1000,
 })
 
+axiosInstance.interceptors.request.use(
+  function (config) {
+    const store = useAuthStore()
+    if (!store.isTokenExpired()) {
+      config.headers.Authorization = `Bearer ${store.userJwt}`
+    }
+    return config
+  },
+  function (error) {
+    return Promise.reject(error)
+  },
+)
+
 export default axiosInstance
