@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   function (config) {
     const store = useAuthStore()
-    if (!store.isTokenExpired()) {
+    if (!store.isTokenExpired) {
       config.headers.Authorization = `Bearer ${store.userJwt}`
     }
     return config

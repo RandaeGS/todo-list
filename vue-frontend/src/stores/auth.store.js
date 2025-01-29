@@ -7,9 +7,6 @@ export const useAuthStore = defineStore('auth', {
     userJwt: null,
   }),
   getters: {
-    token: (state) => {
-      return state.userJwt
-    },
     tokenPayload: (state) => {
       if (!state.userJwt) {
         return null
@@ -25,7 +22,7 @@ export const useAuthStore = defineStore('auth', {
     isTokenExpired: (state) => {
       const payload = state.tokenPayload
       if (!payload) {
-        return null
+        return true
       }
       const expireTime = payload.exp * 1000
       const currentTime = Date.now()
