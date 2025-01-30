@@ -4,7 +4,7 @@ import axiosInstance from '@/plugins/axios'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    userJwt: null,
+    userJwt: localStorage.getItem('jwt') || null,
   }),
   getters: {
     tokenPayload: (state) => {
@@ -38,8 +38,8 @@ export const useAuthStore = defineStore('auth', {
           password: password,
         })
         const jwt = response.data
-        console.log(jwt)
         this.userJwt = jwt
+        localStorage.setItem('jwt', jwt)
         return true
       } catch (error) {
         console.error('Error during login: ', error)
@@ -53,14 +53,17 @@ export const useAuthStore = defineStore('auth', {
           password: password,
         })
         const jwt = response.data
-        console.log(response)
-        console.log(jwt)
         this.userJwt = jwt
+        localStorage.setItem('jwt', jwt)
         return true
       } catch (error) {
         console.error('Error during registration: ', error)
         return false
       }
+    },
+    async logout() {
+      this.userJwt = null
+      localStorage.removeItem('jwt')
     },
   },
 })
