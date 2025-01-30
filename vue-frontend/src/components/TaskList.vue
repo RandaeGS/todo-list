@@ -3,9 +3,9 @@
     <h1 class="text-white text-center text-2xl font-semibold">Task List</h1>
 
     <div v-for="task in list" :key="task.id">
-      <div class="rounded shadow my-3 p-2">
-        <p>{{ task.description }}</p>
-        <input type="checkbox" name="status">
+      <div class="flex rounded shadow m-4 p-2 bg-slate-100 justify-between">
+        <p class="">{{ task.description }}</p>
+        <input type="checkbox" name="status" @click="toggleTaskStatus(task.id)">
       </div>
     </div>
 
@@ -27,4 +27,13 @@ onMounted(async () => {
     console.error("Error fetching tasks: ", error);
   }
 })
+
+const toggleTaskStatus = async (taskId) => {
+  try {
+    const response = await axiosInstance.post(`/tasks/toggle/${taskId}`)
+    console.log(response.data)
+  } catch (error) {
+    console.error("An error happened toggling task status: ", error);
+  }
+};
 </script>
