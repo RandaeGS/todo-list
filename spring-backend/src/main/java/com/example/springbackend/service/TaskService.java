@@ -51,4 +51,17 @@ public class TaskService {
 
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
+
+	public ResponseEntity<Boolean> deleteTask(Long taskId) {
+		Optional<Task> optionalTask = taskRepository.findById(taskId);
+		if (optionalTask.isEmpty()) {
+			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+		}
+
+		Task task = optionalTask.get();
+		task.setDeleted(true);
+		taskRepository.save(task);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 }

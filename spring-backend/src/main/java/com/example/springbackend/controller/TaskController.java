@@ -33,4 +33,9 @@ public class TaskController {
 	public ResponseEntity<Boolean> toggleTaskStatus(@PathVariable("id") Long taskid){
 		return taskService.toggleTaskStatus(taskid);
 	}
+
+	@PostMapping("/delete/{id}")
+	public ResponseEntity<Boolean> deleteTask(@PathVariable("id") Long taskId){
+		return taskService.deleteTask(taskId);
+	}
 }
