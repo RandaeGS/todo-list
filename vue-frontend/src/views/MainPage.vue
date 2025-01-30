@@ -1,6 +1,7 @@
 <script setup>
 import axiosInstance from '../plugins/axios.js'
 import { ref } from 'vue'
+import TaskList from "@/components/TaskList.vue";
 
 const taskContent = ref()
 
@@ -35,9 +36,7 @@ async function createTask() {
         </form>
       </div>
 
-      <div class="w-full mt-6 max-w-xl bg-slate-600 p-4">
-        <h1 class="text-white text-center text-2xl font-semibold">Task List</h1>
-      </div>
+      <TaskList />
 
     </main>
   </div>
