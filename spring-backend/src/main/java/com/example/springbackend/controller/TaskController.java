@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.List;
+
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
@@ -19,5 +22,10 @@ public class TaskController {
 	@PostMapping
 	public ResponseEntity<String> createTask(@RequestBody Task task, Authentication authentication){
 		return taskService.createTask(task, authentication.getName());
+	}
+
+	@GetMapping
+	public List<Task> getUserTasks(Authentication authentication){
+		return taskService.getUserTasks(authentication.getName());
 	}
 }
