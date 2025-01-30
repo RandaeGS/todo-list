@@ -32,7 +32,7 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(customizer -> customizer.disable()).
 						authorizeHttpRequests(request -> request.
-										requestMatchers("auth/register","/auth/register", "/auth/login").permitAll()
+										requestMatchers("auth/register","/auth/login").permitAll()
 										.anyRequest().authenticated())
 						.httpBasic(Customizer.withDefaults()).
 						sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
