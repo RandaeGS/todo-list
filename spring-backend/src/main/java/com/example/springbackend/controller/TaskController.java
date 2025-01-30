@@ -23,7 +23,7 @@ public class TaskController {
 	}
 
 	@GetMapping
-	public List<Task> getUserTasks(Authentication authentication, @RequestParam String filter){
+	public List<Task> getUserTasks(Authentication authentication, @RequestParam(required = false) String filter){
 		return taskService.getUserTasks(authentication.getName(), filter);
 	}
 

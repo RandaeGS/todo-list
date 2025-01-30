@@ -36,8 +36,9 @@ public class TaskService {
 	}
 
 	public List<Task> getUserTasks(String username, String filter) {
+		if (filter == null) return taskRepository.findAllByUser_UsernameAndDeletedIsFalse(username);
 		return switch (filter) {
-			case "completed" -> taskRepository.findAllByUser_UsernameAndDeletedIsFalseAndCompleted(username, true);
+			case "complete" -> taskRepository.findAllByUser_UsernameAndDeletedIsFalseAndCompleted(username, true);
 			case "incomplete" -> taskRepository.findAllByUser_UsernameAndDeletedIsFalseAndCompleted(username, false);
 			default -> taskRepository.findAllByUser_UsernameAndDeletedIsFalse(username);
 		};

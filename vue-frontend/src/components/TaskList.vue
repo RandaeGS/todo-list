@@ -5,7 +5,7 @@
       <h1 class="text-white text-center text-2xl font-semibold flex-1">Task List</h1>
       <div class="text-white flex items-center gap-1 flex-1 justify-end">
         <div class="bg-slate-700 p-1 rounded-lg flex gap-1"> <!-- Contenedor para los botones -->
-          <button @click="filter = 'all'" :class="[
+          <button @click="handleFilterChange('all')" :class="[
             'px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200',
             filter === 'all'
               ? 'bg-blue-500 text-white shadow-sm'
@@ -13,7 +13,7 @@
           ]">
             All
           </button>
-          <button @click="filter = 'complete'" :class="[
+          <button @click="handleFilterChange('complete')" :class="[
             'px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200',
             filter === 'complete'
               ? 'bg-blue-500 text-white shadow-sm'
@@ -21,7 +21,7 @@
           ]">
             Complete
           </button>
-          <button @click="filter = 'incomplete'" :class="[
+          <button @click="handleFilterChange('incomplete')" :class="[
             'px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200',
             filter === 'incomplete'
               ? 'bg-blue-500 text-white shadow-sm'
@@ -37,7 +37,7 @@
       <div class="flex rounded shadow m-4 p-2 bg-slate-100 justify-between hover:shadow-2xl">
         <p class="text-lg flex-1">{{ task.description }}</p>
         <input type="checkbox" name="status" class="accent-indigo-600 transition-colors duration-200 scale-125 mr-3"
-          @click="toggleTaskStatus(task.id)">
+          @click="toggleTaskStatus(task.id)" :checked="task.completed">
         <button class="bg-red-500 hover:bg-red-600 p-2 rounded shadow-md hover:scale-105 text-white"
           @click="deleteTask(task.id)">Delete</button>
       </div>
@@ -89,5 +89,11 @@ const deleteTask = async (taskId) => {
   } catch (error) {
     console.error("An error happened during task deletion: ", error);
   }
+};
+
+const handleFilterChange = (filterValue) => {
+  filter.value = filterValue
+  fetchTasks()
+  console.log("update: ", filterValue)
 };
 </script>
