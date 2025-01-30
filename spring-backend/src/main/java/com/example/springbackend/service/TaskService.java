@@ -38,4 +38,17 @@ public class TaskService {
 	public List<Task> getUserTasks(String username) {
 		return taskRepository.findAllByUser_UsernameAndDeletedIsFalse(username);
 	}
+
+	public ResponseEntity<Boolean> toggleTaskStatus(Long taskid) {
+		Optional<Task> optionalTask = taskRepository.findById(taskid);
+		if (optionalTask.isEmpty()) {
+			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+		}
+
+		Task task = optionalTask.get();
+		task.setCompleted(!task.isCompleted());
+		taskRepository.save(task);
+
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 }

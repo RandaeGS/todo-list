@@ -28,4 +28,9 @@ public class TaskController {
 	public List<Task> getUserTasks(Authentication authentication){
 		return taskService.getUserTasks(authentication.getName());
 	}
+
+	@PostMapping("/toggle/{id}")
+	public ResponseEntity<Boolean> toggleTaskStatus(@PathVariable("id") Long taskid){
+		return taskService.toggleTaskStatus(taskid);
+	}
 }
