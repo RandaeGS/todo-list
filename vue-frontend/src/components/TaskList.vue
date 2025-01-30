@@ -1,11 +1,14 @@
 <template>
   <div class="w-full mt-6 max-w-xl bg-slate-600 p-4">
-    <h1 class="text-white text-center text-2xl font-semibold">Task List</h1>
+    <h1 class="text-white text-center text-2xl font-semibold ">Task List</h1>
 
     <div v-for="task in list" :key="task.id">
-      <div class="flex rounded shadow m-4 p-2 bg-slate-100 justify-between">
-        <p class="">{{ task.description }}</p>
-        <input type="checkbox" name="status" @click="toggleTaskStatus(task.id)">
+      <div class="flex rounded shadow m-4 p-2 bg-slate-100 justify-between hover:shadow-2xl">
+        <p class="text-lg flex-1">{{ task.description }}</p>
+        <input type="checkbox" name="status" class="accent-indigo-600 transition-colors duration-200 scale-125 mr-3"
+          @click="toggleTaskStatus(task.id)">
+        <button class="bg-red-500 hover:bg-red-600 p-2 rounded shadow-md hover:scale-105 text-white"
+          @click="deleteTask(task.id)">Delete</button>
       </div>
     </div>
 
@@ -34,6 +37,17 @@ const toggleTaskStatus = async (taskId) => {
     console.log(response.data)
   } catch (error) {
     console.error("An error happened toggling task status: ", error);
+  }
+};
+
+const deleteTask = async (taskId) => {
+  try {
+    const response = await axiosInstance.post(`/tasks/delete/${taskId}`)
+    console.log(response.data)
+    const updatedList = await axiosInstance.get('/tasks')
+    list.value = updatedList.data
+  } catch (error) {
+    console.error("An error happened during task deletion: ", error);
   }
 };
 </script>
