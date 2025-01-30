@@ -35,8 +35,12 @@ public class TaskService {
 		return new ResponseEntity<>("Task saved succesfully!", HttpStatus.OK);
 	}
 
-	public List<Task> getUserTasks(String username) {
-		return taskRepository.findAllByUser_UsernameAndDeletedIsFalse(username);
+	public List<Task> getUserTasks(String username, String filter) {
+		return switch (filter) {
+			case "completed" -> taskRepository.findAllByUser_UsernameAndDeletedIsFalseAndCompleted(username, true);
+			case "incomplete" -> taskRepository.findAllByUser_UsernameAndDeletedIsFalseAndCompleted(username, false);
+			default -> taskRepository.findAllByUser_UsernameAndDeletedIsFalse(username);
+		};
 	}
 
 	public ResponseEntity<Boolean> toggleTaskStatus(Long taskid) {

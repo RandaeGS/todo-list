@@ -1,13 +1,11 @@
 package com.example.springbackend.controller;
 
 import com.example.springbackend.domain.entity.Task;
-import com.example.springbackend.domain.repository.TaskRepository;
 import com.example.springbackend.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -25,8 +23,8 @@ public class TaskController {
 	}
 
 	@GetMapping
-	public List<Task> getUserTasks(Authentication authentication){
-		return taskService.getUserTasks(authentication.getName());
+	public List<Task> getUserTasks(Authentication authentication, @RequestParam String filter){
+		return taskService.getUserTasks(authentication.getName(), filter);
 	}
 
 	@PostMapping("/toggle/{id}")
